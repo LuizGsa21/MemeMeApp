@@ -19,15 +19,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iSu-Li-nZO" userLabel="container">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iSu-Li-nZO" userLabel="container">
                                 <rect key="frame" x="16" y="20" width="334" height="603"/>
                                 <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eph-6z-QDE" userLabel="TOP">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="31"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="A2H-gA-rLu" userLabel="image">
-                                        <rect key="frame" x="67" y="0.0" width="200" height="603"/>
+                                        <rect key="frame" x="0.0" y="70" width="334" height="464"/>
                                     </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3PP-7J-Lu8" userLabel="BOTTOM">
+                                        <rect key="frame" x="0.0" y="573" width="334" height="30"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="3PP-7J-Lu8" firstAttribute="top" secondItem="A2H-gA-rLu" secondAttribute="bottom" constant="39" id="DJq-pl-5Kx"/>
+                                    <constraint firstItem="A2H-gA-rLu" firstAttribute="leading" secondItem="3PP-7J-Lu8" secondAttribute="leading" id="Kna-ke-kBV"/>
+                                    <constraint firstItem="eph-6z-QDE" firstAttribute="leading" secondItem="iSu-Li-nZO" secondAttribute="leading" id="VZ3-d3-mkw"/>
+                                    <constraint firstItem="A2H-gA-rLu" firstAttribute="centerY" secondItem="iSu-Li-nZO" secondAttribute="centerY" id="bnp-ZV-Iyp"/>
+                                    <constraint firstAttribute="trailing" secondItem="3PP-7J-Lu8" secondAttribute="trailing" id="c6Y-M0-nRB"/>
+                                    <constraint firstItem="eph-6z-QDE" firstAttribute="trailing" secondItem="iSu-Li-nZO" secondAttribute="trailing" id="nma-CO-L8r"/>
+                                    <constraint firstItem="3PP-7J-Lu8" firstAttribute="leading" secondItem="iSu-Li-nZO" secondAttribute="leading" id="y1f-Co-LTp"/>
+                                </constraints>
                             </stackView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="GYa-tV-bSy">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="GYa-tV-bSy">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title="Album" id="8bt-oe-MYL">
@@ -35,10 +58,11 @@
                                             <action selector="pickImageFromAlbum:" destination="BYZ-38-t0r" id="ut7-Y4-HeC"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Camera" id="W1m-RI-ZOU"/>
                                 </items>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
                             <constraint firstItem="iSu-Li-nZO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="420-V5-jrE"/>
                             <constraint firstItem="GYa-tV-bSy" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Kbj-8k-aHp"/>
@@ -51,7 +75,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="albumButton" destination="8bt-oe-MYL" id="3lK-GJ-FQ1"/>
+                        <outlet property="bottomTextField" destination="3PP-7J-Lu8" id="0el-GY-3yI"/>
+                        <outlet property="cameraButton" destination="W1m-RI-ZOU" id="Ruw-tA-pfM"/>
                         <outlet property="imageView" destination="A2H-gA-rLu" id="4Ss-hz-Y1x"/>
+                        <outlet property="topTextField" destination="eph-6z-QDE" id="f1V-do-hiu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
