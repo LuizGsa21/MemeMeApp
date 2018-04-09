@@ -23,17 +23,17 @@
                                 <rect key="frame" x="16" y="20" width="334" height="603"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eph-6z-QDE" userLabel="TOP">
-                                        <rect key="frame" x="0.0" y="0.0" width="334" height="31"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="99"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="A2H-gA-rLu" userLabel="image">
-                                        <rect key="frame" x="0.0" y="70" width="334" height="464"/>
+                                        <rect key="frame" x="0.0" y="138" width="334" height="328"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3PP-7J-Lu8" userLabel="BOTTOM">
-                                        <rect key="frame" x="0.0" y="573" width="334" height="30"/>
+                                        <rect key="frame" x="0.0" y="505" width="334" height="98"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -58,7 +58,11 @@
                                             <action selector="pickImageFromAlbum:" destination="BYZ-38-t0r" id="ut7-Y4-HeC"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Camera" id="W1m-RI-ZOU"/>
+                                    <barButtonItem title="Camera" id="W1m-RI-ZOU">
+                                        <connections>
+                                            <action selector="pickImageFromCamera:" destination="BYZ-38-t0r" id="AEA-MH-At6"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

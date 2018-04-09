@@ -13,6 +13,7 @@
 		259BA5AE207B6ADC00D06BBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 259BA5AD207B6ADC00D06BBB /* Assets.xcassets */; };
 		259BA5B1207B6ADC00D06BBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 259BA5AF207B6ADC00D06BBB /* LaunchScreen.storyboard */; };
 		25F58183207B911D003C32FC /* MemeMeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F58182207B911D003C32FC /* MemeMeTextFieldDelegate.swift */; };
+		32DC7BD442AD1702E35324D1 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DC77B9151B5AD72824B640 /* Meme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		259BA5B0207B6ADC00D06BBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		259BA5B2207B6ADC00D06BBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25F58182207B911D003C32FC /* MemeMeTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeTextFieldDelegate.swift; sourceTree = "<group>"; };
+		32DC77B9151B5AD72824B640 /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				259BA5AD207B6ADC00D06BBB /* Assets.xcassets */,
 				259BA5AF207B6ADC00D06BBB /* LaunchScreen.storyboard */,
 				259BA5B2207B6ADC00D06BBB /* Info.plist */,
+				32DC77B9151B5AD72824B640 /* Meme.swift */,
 			);
 			path = MemeMe;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				259BA5A9207B6ADC00D06BBB /* ViewController.swift in Sources */,
 				25F58183207B911D003C32FC /* MemeMeTextFieldDelegate.swift in Sources */,
 				259BA5A7207B6ADC00D06BBB /* AppDelegate.swift in Sources */,
+				32DC7BD442AD1702E35324D1 /* Meme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
