@@ -35,7 +35,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.textAlignment = .center
         bottomTextFieldDelegate = MemeMeTextFieldDelegate()
-        bottomTextFieldDelegate.autoAdjustKeyboard = true
         bottomTextField.delegate = bottomTextFieldDelegate
     }
 
@@ -59,8 +58,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
 
     override func viewWillAppear(_ animated: Bool) {
+        subscribeToKeyboardNotification()
         albumButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        super.viewWillAppear(animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        subscribeToKeyboardNotification()
+        super.viewWillDisappear(animated)
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
@@ -74,7 +80,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     func save() {
-        var memedImage = generateMemedImage()
+        let memedImage = generateMemedImage()
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imageView.image!, memedImage: memedImage)
     }
 
@@ -86,6 +92,42 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIGraphicsEndImageContext()
 
         return memedImage
+    }
+
+    func getKeyboardHeight(_ notification: NSNotification) -> CGFloat {
+        if let frame = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue? {
+            return frame.cgRectValue.height
+        }
+        return CGFloat(0)
+    }
+    
+    func keyboardCanOverlapEditingField() -> Bool {
+        return bottomTextField.isFirstResponder
+    }
+
+    // MARK: handlers
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if (keyboardCanOverlapEditingField() && view.frame.origin.y == 0) {
+            let height = getKeyboardHeight(notification)
+            view.frame.origin.y -= height
+        }
+    }
+
+    @objc func keyboardWillHide() {
+        if (keyboardCanOverlapEditingField()) {
+            view.frame.origin.y = 0
+        }
+    }
+    
+    // MARK: subscriptions
+    func subscribeToKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+    }
+
+    func unsubscribeToKeyboardNotification() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
 }
 
