@@ -116,15 +116,28 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     func generateMemedImage() -> UIImage {
-        setToolbarVisibility(to: false)
+
+        let isPortrait = self.isPortrait();
+        
+        if (isPortrait) {
+            // we set opacity so layout doesn't change
+            setToolbarAlpha(to: 0)
+        } else {
+            setToolbarVisibility(to:  false)
+        }
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        
-        setToolbarVisibility(to: true)
+
+        if (isPortrait) {
+            setToolbarAlpha(to: 1)
+        } else {
+            setToolbarVisibility(to:  true)
+        }
+
         return memedImage
     }
 
@@ -165,15 +178,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return bottomTextField.isFirstResponder
     }
     
+    // used in portrait mode
+    func setToolbarAlpha(to alpha: Int) {
+        topToolbar.alpha = CGFloat(alpha);
+        bottomToolbar.alpha = CGFloat(alpha);
+    }
+    
+    // used in landscape mode
     func setToolbarVisibility(to visible: Bool) {
-        // we set opacity so layout doesn't change
-        if visible {
-            topToolbar.alpha = 1;
-            bottomToolbar.alpha = 1;
-        } else {
-            topToolbar.alpha = 0;
-            bottomToolbar.alpha = 0;
+        topToolbar.isHidden = !visible;
+        bottomToolbar.isHidden = !visible;
+    }
+    
+    func isPortrait() -> Bool {
+        //  UIDevice.current.orientation can sometimes return orientation status as unknown... what gives?
+        if let size = UIApplication.shared.keyWindow?.rootViewController?.view.frame.size {
+            return size.height > size.width;
         }
+        // shouldn't reach, assume portrait.
+        return true;
     }
 }
 
