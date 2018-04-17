@@ -15,32 +15,35 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var shareButton: UIBarButtonItem!
 
     @IBOutlet weak var imageView: UIImageView!
-    
+
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var bottomToolbar: UIToolbar!
     @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    
+
 
     var topTextFieldDelegate: MemeMeTextFieldDelegate!
     var bottomTextFieldDelegate: MemeMeTextFieldDelegate!
     var memes = [Meme]();
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let memeTextAttributes: [String: Any] = [
+            NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSAttributedStringKey.strokeColor.rawValue: UIColor.white,
             NSAttributedStringKey.foregroundColor.rawValue: UIColor.black,
-            NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSAttributedStringKey.strokeWidth.rawValue: 5
+            // Specify negative values to stroke and fill the text.
+            NSAttributedStringKey.strokeWidth.rawValue: -3.0,
         ]
         topTextField.defaultTextAttributes = memeTextAttributes
+        topTextField.autocapitalizationType = .allCharacters
         topTextField.textAlignment = .center
         topTextFieldDelegate = MemeMeTextFieldDelegate()
         topTextField.delegate = topTextFieldDelegate
 
         bottomTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.autocapitalizationType = .allCharacters
         bottomTextField.textAlignment = .center
         bottomTextFieldDelegate = MemeMeTextFieldDelegate()
         bottomTextField.delegate = bottomTextFieldDelegate
@@ -48,6 +51,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imageView.contentMode = .scaleAspectFit
         shareButton.isEnabled = false
     }
+
     // MARK: lifecycle
     override func viewWillAppear(_ animated: Bool) {
         subscribeToKeyboardNotification()
@@ -60,10 +64,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         subscribeToKeyboardNotification()
         super.viewWillDisappear(animated)
     }
-    
+
 
     // MARK: choose image
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as! UIImage? {
             // do something with chosen image
             imageView.image = image
@@ -96,7 +100,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imageView.image!, memedImage: memedImage)
         let activityItem: [AnyObject] = [memedImage as AnyObject]
         let avc = UIActivityViewController(activityItems: activityItem as [AnyObject], applicationActivities: nil)
-        
+
         avc.completionWithItemsHandler = { activity, success, items, error in
             if success {
                 self.save(meme);
@@ -106,7 +110,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             present(avc, animated: true, completion: nil)
         } else if (UIDevice.current.userInterfaceIdiom == .pad) {
             avc.modalPresentationStyle = .popover
-            avc.popoverPresentationController!.sourceView = self.view
+            avc.popoverPresentationController!.barButtonItem = shareButton
             present(avc, animated: true, completion: nil)
         }
     }
@@ -154,7 +158,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             view.frame.origin.y = 0
         }
     }
-    
+
     // MARK: subscriptions
     func subscribeToKeyboardNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
@@ -177,19 +181,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func keyboardCanOverlapEditingField() -> Bool {
         return bottomTextField.isFirstResponder
     }
-    
+
     // used in portrait mode
     func setToolbarAlpha(to alpha: Int) {
         topToolbar.alpha = CGFloat(alpha);
         bottomToolbar.alpha = CGFloat(alpha);
     }
-    
+
     // used in landscape mode
     func setToolbarVisibility(to visible: Bool) {
         topToolbar.isHidden = !visible;
         bottomToolbar.isHidden = !visible;
     }
-    
+
     func isPortrait() -> Bool {
         //  UIDevice.current.orientation can sometimes return orientation status as unknown... what gives?
         if let size = UIApplication.shared.keyWindow?.rootViewController?.view.frame.size {
