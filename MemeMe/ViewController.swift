@@ -10,12 +10,17 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var topToolbar: UIToolbar!
     @IBOutlet weak var topTextField: UITextField!
-    @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+
     @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var bottomToolbar: UIToolbar!
     @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var shareButton: UIBarButtonItem!
+    
 
     var topTextFieldDelegate: MemeMeTextFieldDelegate!
     var bottomTextFieldDelegate: MemeMeTextFieldDelegate!
@@ -39,6 +44,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomTextField.textAlignment = .center
         bottomTextFieldDelegate = MemeMeTextFieldDelegate()
         bottomTextField.delegate = bottomTextFieldDelegate
+
+        imageView.contentMode = .scaleAspectFit
+        shareButton.isEnabled = false
     }
     // MARK: lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +67,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let image = info[UIImagePickerControllerOriginalImage] as! UIImage? {
             // do something with chosen image
             imageView.image = image
-
+            shareButton.isEnabled = true
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -86,7 +94,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func shareImage(_ sender: Any) {
         let memedImage = generateMemedImage()
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imageView.image!, memedImage: memedImage)
-        let activityItem: [AnyObject] = [self.imageView.image as AnyObject]
+        let activityItem: [AnyObject] = [memedImage as AnyObject]
         let avc = UIActivityViewController(activityItems: activityItem as [AnyObject], applicationActivities: nil)
         
         avc.completionWithItemsHandler = { activity, success, items, error in
@@ -94,14 +102,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 self.save(meme);
             }
         };
-
-        let controller = UIActivityViewController(activityItems:[UIImage()], applicationActivities:nil)
         if (UIDevice.current.userInterfaceIdiom == .phone) {
-            present(controller, animated: true, completion: nil)
+            present(avc, animated: true, completion: nil)
         } else if (UIDevice.current.userInterfaceIdiom == .pad) {
-            controller.modalPresentationStyle = .popover
-            controller.popoverPresentationController!.sourceView = self.view
-            present(controller, animated: true, completion: nil)
+            avc.modalPresentationStyle = .popover
+            avc.popoverPresentationController!.sourceView = self.view
+            present(avc, animated: true, completion: nil)
         }
     }
 
@@ -110,12 +116,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     func generateMemedImage() -> UIImage {
+        setToolbarVisibility(to: false)
+        
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-
+        
+        setToolbarVisibility(to: true)
         return memedImage
     }
 
@@ -154,6 +163,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     func keyboardCanOverlapEditingField() -> Bool {
         return bottomTextField.isFirstResponder
+    }
+    
+    func setToolbarVisibility(to visible: Bool) {
+        // we set opacity so layout doesn't change
+        if visible {
+            topToolbar.alpha = 1;
+            bottomToolbar.alpha = 1;
+        } else {
+            topToolbar.alpha = 0;
+            bottomToolbar.alpha = 0;
+        }
     }
 }
 
