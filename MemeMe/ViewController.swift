@@ -31,10 +31,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         let memeTextAttributes: [String: Any] = [
             NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSAttributedStringKey.strokeColor.rawValue: UIColor.white,
-            NSAttributedStringKey.foregroundColor.rawValue: UIColor.black,
+            // white with a black outline, and shrink to fit.
+            NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
+            NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
             // Specify negative values to stroke and fill the text.
-            NSAttributedStringKey.strokeWidth.rawValue: -3.0,
+            NSAttributedStringKey.strokeWidth.rawValue: -5.0,
         ]
         topTextField.defaultTextAttributes = memeTextAttributes
         topTextField.autocapitalizationType = .allCharacters
