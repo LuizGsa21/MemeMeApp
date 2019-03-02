@@ -6,13 +6,15 @@
 import UIKit
 
 struct Meme {
-    var topText: String;
-    var bottomText: String;
-    var originalImage: UIImage;
+    let topText: String;
+    let bottomText: String;
+    let originalImage: UIImage;
+    let memedImage: UIImage;
 
-    init(topText: String, bottomText: String, originalImage: UIImage, memedImage: Any) {
+    init(topText: String, bottomText: String, originalImage: UIImage, memedImage: UIImage) {
         self.topText = topText;
         self.bottomText = bottomText;
         self.originalImage = originalImage;
+        self.memedImage = memedImage;
     }
 }

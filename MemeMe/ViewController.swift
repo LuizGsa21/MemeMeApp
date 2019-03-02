@@ -29,28 +29,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let memeTextAttributes: [String: Any] = [
-            NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            // white with a black outline, and shrink to fit.
-            NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
-            NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
-            // Specify negative values to stroke and fill the text.
-            NSAttributedStringKey.strokeWidth.rawValue: -5.0,
-        ]
-        topTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.autocapitalizationType = .allCharacters
-        topTextField.textAlignment = .center
+       
+        customizeTextField(textField: topTextField, defaultText: "TOP")
         topTextFieldDelegate = MemeMeTextFieldDelegate()
         topTextField.delegate = topTextFieldDelegate
 
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.autocapitalizationType = .allCharacters
-        bottomTextField.textAlignment = .center
+        customizeTextField(textField: bottomTextField, defaultText: "BOTTOM")
         bottomTextFieldDelegate = MemeMeTextFieldDelegate()
         bottomTextField.delegate = bottomTextFieldDelegate
 
         imageView.contentMode = .scaleAspectFit
         shareButton.isEnabled = false
+    }
+    
+    func customizeTextField(textField: UITextField, defaultText: String) {
+        let memeTextAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            // white with a black outline, and shrink to fit.
+            NSAttributedString.Key.strokeColor: UIColor.black,
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            // Specify negative values to stroke and fill the text.
+            NSAttributedString.Key.strokeWidth: -5.0,
+        ]
+        
+        textField.autocapitalizationType = .allCharacters
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.text = defaultText
+        textField.textAlignment = .center
     }
 
     // MARK: lifecycle
@@ -68,8 +73,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
 
     // MARK: choose image
-    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as! UIImage? {
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage? {
             // do something with chosen image
             imageView.image = image
             shareButton.isEnabled = true
@@ -78,19 +83,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     @IBAction func pickImageFromAlbum(_ sender: Any) {
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        if (UIImagePickerController.isSourceTypeAvailable(.photoLibrary)) {
-            picker.sourceType = .photoLibrary
-        }
-        present(picker, animated: true, completion: nil)
+        showPicker(.photoLibrary)
     }
 
     @IBAction func pickImageFromCamera(_ sender: Any) {
+        showPicker(.camera)
+    }
+    
+    
+    func showPicker(_ sourceType: UIImagePickerController.SourceType) {
         let picker = UIImagePickerController()
         picker.delegate = self
-        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
-            picker.sourceType = .camera
+        if (UIImagePickerController.isSourceTypeAvailable(sourceType)) {
+            picker.sourceType = sourceType
         }
         present(picker, animated: true, completion: nil)
     }
@@ -148,32 +153,29 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     // MARK: handlers
     @objc func keyboardWillShow(notification: NSNotification) {
-        if (keyboardCanOverlapEditingField() && view.frame.origin.y == 0) {
-            let height = getKeyboardHeight(notification)
-            view.frame.origin.y -= height
+        if (keyboardCanOverlapEditingField()) {
+            view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
 
     @objc func keyboardWillHide() {
-        if (keyboardCanOverlapEditingField()) {
-            view.frame.origin.y = 0
-        }
+        view.frame.origin.y = 0
     }
 
     // MARK: subscriptions
     func subscribeToKeyboardNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     func unsubscribeToKeyboardNotification() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     // MARK: other
     func getKeyboardHeight(_ notification: NSNotification) -> CGFloat {
-        if let frame = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue? {
+        if let frame = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue? {
             return frame.cgRectValue.height
         }
         return CGFloat(0)
@@ -204,4 +206,3 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return true;
     }
 }
-
