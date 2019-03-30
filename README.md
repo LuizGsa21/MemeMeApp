@@ -1,4 +1,4 @@
-# MemeMe App v1.0
+# MemeMe App v2.0
 
 A simple meme generator for iOS devices.
 
