@@ -36,16 +36,11 @@ class SentMemesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "memeCell", for: indexPath)
         let meme = self.memes[indexPath.row]
-        cell.textLabel?.text = meme.topText + "..." + meme.bottomText
-        cell.textLabel?.lineBreakMode = .byTruncatingMiddle
-        
-        let itemSize = CGSize(width:100, height:100);
-        UIGraphicsBeginImageContextWithOptions(itemSize, false, UIScreen.main.scale);
-        let imageRect = CGRect(x:0.0, y:0.0, width:itemSize.width, height:itemSize.height);
-        meme.memedImage.draw(in: imageRect)
-        let image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        cell.imageView!.image = image
+        cell.textLabel!.text = meme.topText + "..." + meme.bottomText
+        cell.textLabel!.lineBreakMode = .byTruncatingMiddle
+        cell.imageView!.contentMode = .scaleAspectFit
+        cell.imageView!.image = meme.memedImage
+
         // cell.imageView!.contentMode = .scaleAspectFit
         return cell
     }

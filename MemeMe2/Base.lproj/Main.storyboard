@@ -54,7 +54,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="memeCell" id="a7U-z2-8Kn">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="memeCell" id="a7U-z2-8Kn" customClass="MemeTableViewCell" customModule="MemeMe2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a7U-z2-8Kn" id="slj-A6-r61">
@@ -170,9 +170,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="btO-6E-lq1" firstAttribute="centerY" secondItem="6Lg-xx-FnM" secondAttribute="centerY" id="FKx-MX-utc"/>
+                            <constraint firstItem="btO-6E-lq1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Lg-xx-FnM" secondAttribute="top" priority="999" id="T2Q-WL-FFk"/>
                             <constraint firstItem="btO-6E-lq1" firstAttribute="trailing" secondItem="6Lg-xx-FnM" secondAttribute="trailing" id="crN-QC-QGg"/>
                             <constraint firstItem="btO-6E-lq1" firstAttribute="leading" secondItem="6Lg-xx-FnM" secondAttribute="leading" id="ePL-xT-wAt"/>
                             <constraint firstItem="btO-6E-lq1" firstAttribute="centerX" secondItem="6Lg-xx-FnM" secondAttribute="centerX" id="sYH-jF-ouT"/>
+                            <constraint firstItem="6Lg-xx-FnM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="btO-6E-lq1" secondAttribute="bottom" priority="999" id="zf2-Ll-h3m"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Lg-xx-FnM"/>
                     </view>

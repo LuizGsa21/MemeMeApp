@@ -8,13 +8,13 @@
 
 import UIKit
 
-class MemeDetailViewController: UIViewController, UIScrollViewDelegate {
+class MemeDetailViewController: UIViewController {
 
-    
+
     public var image: UIImage?
     
     @IBOutlet var imageView: UIImageView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -30,10 +30,6 @@ class MemeDetailViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
         
-    }
-
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self.imageView
     }
 
     /*

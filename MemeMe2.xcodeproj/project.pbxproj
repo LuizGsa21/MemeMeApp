@@ -20,6 +20,7 @@
 		251DB51E224FD6F300399240 /* MemeMeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251DB51D224FD6F300399240 /* MemeMeTextFieldDelegate.swift */; };
 		251DB520224FE14600399240 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 251DB51F224FE14600399240 /* Assets.xcassets */; };
 		251DB522224FE75500399240 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251DB521224FE75500399240 /* ViewController+Extension.swift */; };
+		32DC7A2A6FC150BBD85D7BCE /* MemeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DC75E7453296DE71FE61DA /* MemeTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		251DB51D224FD6F300399240 /* MemeMeTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeTextFieldDelegate.swift; sourceTree = "<group>"; };
 		251DB51F224FE14600399240 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		251DB521224FE75500399240 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
+		32DC75E7453296DE71FE61DA /* MemeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				251DB515224FB5F400399240 /* MemeCollectionViewCell.swift */,
+				32DC75E7453296DE71FE61DA /* MemeTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				251DB514224FADFB00399240 /* MemeDetailViewController.swift in Sources */,
 				251DB522224FE75500399240 /* ViewController+Extension.swift in Sources */,
 				251DB518224FD04000399240 /* NSObjectProtocol+Extension.swift in Sources */,
+				32DC7A2A6FC150BBD85D7BCE /* MemeTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
