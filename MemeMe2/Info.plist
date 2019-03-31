@@ -24,6 +24,8 @@
 	<string>LaunchScreen</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>To save your meme!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To choose your meme!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To take a picture</string>
 	<key>UIMainStoryboardFile</key>

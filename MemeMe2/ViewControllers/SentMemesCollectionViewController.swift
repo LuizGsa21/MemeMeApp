@@ -30,16 +30,7 @@ class SentMemesCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Sent Memes"
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        
-        
-        // Register cell classes
-//        self.collectionView!.register(MemeCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
         updateItemSize(containerSize: self.view.bounds.size)
-        // Do any additional setup after loading the view.
     }
 
     override func viewWillLayoutSubviews() {
@@ -70,9 +61,13 @@ class SentMemesCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        var detail = storyboard!.instantiateViewController(withIdentifier: MemeDetailViewController.className)
-        
+        let detail = storyboard!.instantiateViewController(withIdentifier: MemeDetailViewController.className) as! MemeDetailViewController
+        detail.image = self.memes[indexPath.row].memedImage
         self.navigationController!.pushViewController(detail, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.collectionView.reloadData()
     }
 
     // MARK: UICollectionViewDataSource
@@ -93,12 +88,5 @@ class SentMemesCollectionViewController: UICollectionViewController {
     
         return cell
     }
-
-    override func unwind (_ sender: UIStoryboardSegue) {
-        if sender.source is MemeEditorViewController {
-            self.collectionView.reloadData()
-        }
-    }
-
 
 }

@@ -45,15 +45,14 @@ class SentMemesTableViewController: UITableViewController {
         return cell
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = storyboard!.instantiateViewController(withIdentifier: MemeDetailViewController.className) as! MemeDetailViewController
         detail.image = self.memes[indexPath.row].memedImage
         self.navigationController!.pushViewController(detail, animated: true)
-    }
-
-    override func unwind (_ sender: UIStoryboardSegue) {
-        if sender.source is MemeEditorViewController {
-            self.tableView.reloadData()
-        }
     }
 }
